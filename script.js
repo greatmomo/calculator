@@ -34,12 +34,17 @@ function operate(operator, a, b) {
     }
 }
 
-function printDiv(e) {
+function inputValues(e) {
+    // need to only take correct input
+
     console.log(e.target.textContent);
+    displayEquation.innerHTML += e.target.textContent;
 }
 
 const buttons = document.querySelectorAll('.button');
-buttons.forEach(elem => elem.addEventListener('click', printDiv));
+buttons.forEach(elem => elem.addEventListener('click', inputValues));
+
+const displayEquation = document.querySelector('.display-equation');
 
 // some numbers ... an operator ... some numbers ... equals/another operator ... repeat
 // after a calculation, store result in variable 1
