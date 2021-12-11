@@ -34,6 +34,13 @@ function operate(operator, a, b) {
     }
 }
 
+function printDiv(e) {
+    console.log(e.target.textContent);
+}
+
+const buttons = document.querySelectorAll('.button');
+buttons.forEach(elem => elem.addEventListener('click', printDiv));
+
 // some numbers ... an operator ... some numbers ... equals/another operator ... repeat
 // after a calculation, store result in variable 1
 // on reset, clear both variables (undefined? not 0?)
