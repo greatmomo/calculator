@@ -1,3 +1,7 @@
+let valueLeft = 0;
+let valueRight = 0;
+let operation = '';
+
 function add(a, b) {
     return a + b;
 }
@@ -36,6 +40,13 @@ function operate(operator, a, b) {
 
 function inputValues(e) {
     // need to only take correct input
+    // entering first number, then pressing an operator should save the number to a variable
+    // then save the operator and allow entry of the second variable.
+    // pressing enter or another operator should perform the operation and repeat the procedure
+    // if variable 1 is zero, treat it as empty and overwrite the value
+    // otherwise, append the new number
+
+    // should be able to read out second class to check for number/operation and special cases
 
     console.log(e.target.textContent);
     displayEquation.innerHTML += e.target.textContent;
