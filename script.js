@@ -47,8 +47,8 @@ function inputValues(e) {
     // otherwise, append the new number
 
     // should be able to read out second class to check for number/operation and special cases
+    console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
 
-    console.log(e.target.textContent);
     displayEquation.innerHTML += e.target.textContent;
 }
 
