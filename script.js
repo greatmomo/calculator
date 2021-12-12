@@ -46,6 +46,35 @@ function inputValues(e) {
     // if variable 1 is zero, treat it as empty and overwrite the value
     // otherwise, append the new number
 
+    const keyClass = e.target.classList[1];
+
+    switch (keyClass) {
+        case 'number':
+            break;
+
+        case 'operation':
+            break;
+
+        case 'equal':
+            break;
+
+        case 'delete':
+            break;
+
+        case 'clear':
+            break;
+        
+        case 'negate':
+            break;
+
+        case 'decimal':
+            break;
+
+        default:
+            console.log('Invalid key Class. Contact your service provider.');
+            break;
+    }
+
     // should be able to read out second class to check for number/operation and special cases
     console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
 
