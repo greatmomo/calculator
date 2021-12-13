@@ -1,5 +1,5 @@
-let valueLeft = 0;
-let valueRight = 0;
+let valueLeft = '';
+let valueRight = '';
 let operation = '';
 
 function add(a, b) {
@@ -26,10 +26,10 @@ function operate(operator, a, b) {
         case '-':
             return subtract(a, b);
             break;
-        case '*':
+        case 'x':
             return multiply(a, b);
             break;
-        case '/':
+        case '÷':
             return divide(a, b);
             break;
         default:
@@ -50,12 +50,29 @@ function inputValues(e) {
 
     switch (keyClass) {
         case 'number':
+            if (operation === '') {
+                valueLeft += e.target.textContent;
+            } else {
+                valueRight += e.target.textContent;
+            }
+            console.log(`left: ${valueLeft}\tright: ${valueRight}`);
             break;
 
         case 'operation':
+            if (operation !== '') {
+                // equal code basically
+                valueLeft = operate(operation, +valueLeft, +valueRight);
+                valueRight = '';
+                // then the operation code
+            }
+            operation = e.target.textContent;
+            console.log(`operation: ${operation}`);
             break;
 
         case 'equal':
+            valueLeft = operate(operation, +valueLeft, +valueRight); // save result in value left
+            valueRight = '';
+            operation = '';
             break;
 
         case 'delete':
@@ -68,6 +85,24 @@ function inputValues(e) {
             break;
 
         case 'decimal':
+            console.log(`operation is ${operation}`);
+            if (operation === '') {
+                if (!valueLeft.includes('.')) {
+                    if (valueLeft === '') {
+                        valueLeft = '0.';
+                    } else {
+                        valueLeft += e.target.textContent;
+                    }
+                }
+            } else {
+                if (!valueLeft.includes('.')) {
+                    if (valueRight === '') {
+                        valueRight = '0.';
+                    } else {
+                        valueRight += e.target.textContent;
+                    }
+                }
+            }
             break;
 
         default:
@@ -78,7 +113,7 @@ function inputValues(e) {
     // should be able to read out second class to check for number/operation and special cases
     console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
 
-    displayEquation.innerHTML += e.target.textContent;
+    displayEquation.innerHTML = `${valueLeft}${operation}${valueRight}`;
 }
 
 const buttons = document.querySelectorAll('.button');
