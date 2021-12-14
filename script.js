@@ -62,6 +62,8 @@ function inputValues(e) {
             if (operation !== '') {
                 // equal code basically
                 valueLeft = operate(operation, +valueLeft, +valueRight);
+                valueLeft = Math.round((valueLeft + Number.EPSILON) * 10000) / 10000;
+                valueLeft = valueLeft.toString();
                 valueRight = '';
                 // then the operation code
             }
@@ -71,17 +73,47 @@ function inputValues(e) {
 
         case 'equal':
             valueLeft = operate(operation, +valueLeft, +valueRight); // save result in value left
+            valueLeft = Math.round((valueLeft + Number.EPSILON) * 10000) / 10000;
+            valueLeft = valueLeft.toString();
             valueRight = '';
             operation = '';
             break;
 
         case 'delete':
+            // depending on which element is active, works differently
+            if (operation === '') {
+                if (valueLeft.length > 0) {
+                    valueLeft = valueLeft.substring(0, valueLeft.length - 1);
+                }
+            } else {
+                if (valueRight.length > 0) {
+                    valueRight = valueRight.substring(0, valueRight.length - 1);
+                } else {
+                    operation = '';
+                }
+            }
             break;
 
         case 'clear':
+            valueLeft = '';
+            valueRight = '';
+            operation = '';
             break;
         
         case 'negate':
+            if (operation === '') {
+                if (valueLeft.charAt(0) === '-') {
+                    valueLeft = valueLeft.substring(1);
+                } else {
+                    valueLeft = `-${valueLeft}`;
+                }
+            } else {
+                if (valueRight.charAt(0) === '-') {
+                    valueRight = valueRight.substring(1);
+                } else {
+                    valueRight = `-${valueRight}`;
+                }
+            }
             break;
 
         case 'decimal':
@@ -95,7 +127,7 @@ function inputValues(e) {
                     }
                 }
             } else {
-                if (!valueLeft.includes('.')) {
+                if (!valueRight.includes('.')) {
                     if (valueRight === '') {
                         valueRight = '0.';
                     } else {
@@ -113,7 +145,11 @@ function inputValues(e) {
     // should be able to read out second class to check for number/operation and special cases
     console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
 
-    displayEquation.innerHTML = `${valueLeft}${operation}${valueRight}`;
+    if (keyClass !== 'clear') {
+        displayEquation.innerHTML = `${valueLeft}${operation}${valueRight}`;
+    } else {
+        displayEquation.textContent = `0`;
+    }
 }
 
 const buttons = document.querySelectorAll('.button');
