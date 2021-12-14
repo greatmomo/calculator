@@ -30,6 +30,9 @@ function operate(operator, a, b) {
             return multiply(a, b);
             break;
         case '÷':
+            if (b == 0) {
+                return `¯\\_(ツ)_/¯`;
+            }
             return divide(a, b);
             break;
         default:
@@ -60,10 +63,15 @@ function inputValues(e) {
 
         case 'operation':
             if (operation !== '') {
+                if (valueRight === '') {
+                    return;
+                }
                 // equal code basically
                 valueLeft = operate(operation, +valueLeft, +valueRight);
-                valueLeft = Math.round((valueLeft + Number.EPSILON) * 10000) / 10000;
-                valueLeft = valueLeft.toString();
+                if (typeof(valueLeft) === 'number') {
+                    valueLeft = Math.round((valueLeft + Number.EPSILON) * 10000) / 10000;
+                    valueLeft = valueLeft.toString();
+                }
                 valueRight = '';
                 // then the operation code
             }
@@ -72,9 +80,14 @@ function inputValues(e) {
             break;
 
         case 'equal':
+            if (valueRight === '') {
+                return;
+            }
             valueLeft = operate(operation, +valueLeft, +valueRight); // save result in value left
-            valueLeft = Math.round((valueLeft + Number.EPSILON) * 10000) / 10000;
-            valueLeft = valueLeft.toString();
+            if (typeof(valueLeft) === 'number') {
+                valueLeft = Math.round((valueLeft + Number.EPSILON) * 10000) / 10000;
+                valueLeft = valueLeft.toString();
+            }
             valueRight = '';
             operation = '';
             break;
