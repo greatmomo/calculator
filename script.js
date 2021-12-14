@@ -42,17 +42,14 @@ function operate(operator, a, b) {
 }
 
 function inputValues(e) {
-    // need to only take correct input
-    // entering first number, then pressing an operator should save the number to a variable
-    // then save the operator and allow entry of the second variable.
-    // pressing enter or another operator should perform the operation and repeat the procedure
-    // if variable 1 is zero, treat it as empty and overwrite the value
-    // otherwise, append the new number
-
     const keyClass = e.target.classList[1];
 
     switch (keyClass) {
         case 'number':
+            if (valueLeft === `¯\\_(ツ)_/¯`) {
+                valueLeft = '';
+                operation = '';
+            }
             if (operation === '') {
                 valueLeft += e.target.textContent;
             } else {
@@ -62,6 +59,13 @@ function inputValues(e) {
             break;
 
         case 'operation':
+            if (valueLeft === `¯\\_(ツ)_/¯`) {
+                valueLeft = '';
+                operation = '';
+            }
+            if (valueLeft === '') {
+                return;
+            }
             if (operation !== '') {
                 if (valueRight === '') {
                     return;
@@ -93,6 +97,9 @@ function inputValues(e) {
             break;
 
         case 'delete':
+            if (valueLeft === `¯\\_(ツ)_/¯` || valueLeft === '') {
+                return;
+            }
             // depending on which element is active, works differently
             if (operation === '') {
                 if (valueLeft.length > 0) {
@@ -114,6 +121,9 @@ function inputValues(e) {
             break;
         
         case 'negate':
+            if (valueLeft === `¯\\_(ツ)_/¯`) {
+                return;
+            }
             if (operation === '') {
                 if (valueLeft.charAt(0) === '-') {
                     valueLeft = valueLeft.substring(1);
@@ -130,6 +140,9 @@ function inputValues(e) {
             break;
 
         case 'decimal':
+            if (valueLeft === `¯\\_(ツ)_/¯`) {
+                return;
+            }
             console.log(`operation is ${operation}`);
             if (operation === '') {
                 if (!valueLeft.includes('.')) {
@@ -158,10 +171,10 @@ function inputValues(e) {
     // should be able to read out second class to check for number/operation and special cases
     console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
 
-    if (keyClass !== 'clear') {
-        displayEquation.innerHTML = `${valueLeft}${operation}${valueRight}`;
-    } else {
+    if (keyClass === 'clear' || (keyClass === 'delete' && valueLeft === '')) {
         displayEquation.textContent = `0`;
+    } else {
+        displayEquation.innerHTML = `${valueLeft}${operation}${valueRight}`;
     }
 }
 
@@ -169,7 +182,3 @@ const buttons = document.querySelectorAll('.button');
 buttons.forEach(elem => elem.addEventListener('click', inputValues));
 
 const displayEquation = document.querySelector('.display-equation');
-
-// some numbers ... an operator ... some numbers ... equals/another operator ... repeat
-// after a calculation, store result in variable 1
-// on reset, clear both variables (undefined? not 0?)
