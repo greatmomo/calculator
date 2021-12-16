@@ -6,7 +6,8 @@ body {
     font-size: 1.6rem;
 
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
@@ -89,6 +90,32 @@ body {
     width: 43%;
 }
 
-    /*
-    text #fff w/ dark background 2 and 4 
-    */
+footer {
+    position: fixed;
+    bottom: 0;
+    padding: 10px;
+    background-color: hsl(220, 33%, 32%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes in {
+    from {transform: rotateZ(0deg) scale(1);}
+    to {transform: rotateZ(360deg) scale(1.2);}
+}
+@keyframes out {
+    from {transform: rotateZ(360deg) scale(1.2);}
+    to {transform: rotateZ(0deg) scale(1);}
+}
+#gh-logo {
+    animation: out 1s;
+    transform: scale(1);
+    transition: transform .1s;
+}
+
+#gh-logo:hover {
+    animation: in 1s;
+    transform: scale(1.2);
+}
