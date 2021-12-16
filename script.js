@@ -55,7 +55,7 @@ function inputValues(e) {
             } else {
                 valueRight += e.target.textContent;
             }
-            console.log(`left: ${valueLeft}\tright: ${valueRight}`);
+            //console.log(`left: ${valueLeft}\tright: ${valueRight}`);
             break;
 
         case 'operation':
@@ -80,7 +80,7 @@ function inputValues(e) {
                 // then the operation code
             }
             operation = e.target.textContent;
-            console.log(`operation: ${operation}`);
+            //console.log(`operation: ${operation}`);
             break;
 
         case 'equal':
@@ -143,7 +143,6 @@ function inputValues(e) {
             if (valueLeft === `¯\\_(ツ)_/¯`) {
                 return;
             }
-            console.log(`operation is ${operation}`);
             if (operation === '') {
                 if (!valueLeft.includes('.')) {
                     if (valueLeft === '') {
@@ -169,7 +168,7 @@ function inputValues(e) {
     }
 
     // should be able to read out second class to check for number/operation and special cases
-    console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
+    //console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
 
     if (keyClass === 'clear' || (keyClass === 'delete' && valueLeft === '')) {
         displayEquation.textContent = `0`;
@@ -178,7 +177,46 @@ function inputValues(e) {
     }
 }
 
+window.addEventListener("keydown", function(e) {
+    e.preventDefault();
+    switch(e.key){
+        case('1'):
+        case('2'):
+        case('3'):
+        case('4'):
+        case('5'):
+        case('6'):
+        case('7'):
+        case('8'):
+        case('9'):
+        case('0'):
+        case('+'):
+        case('-'):
+            document.getElementById(e.key).click();
+            break;
+        case('/'):
+            document.getElementById('÷').click();
+            break;
+        case('*'):
+            document.getElementById('x').click();
+            break;
+        case('Enter'):
+            document.getElementById('=').click();
+            break;
+        case('.'):
+            document.getElementById('.').click();
+            break;
+        case('Backspace'):
+            document.getElementById('del').click();
+            break;
+        default:
+            break;
+    }
+})
+
 const buttons = document.querySelectorAll('.button');
 buttons.forEach(elem => elem.addEventListener('click', inputValues));
 
 const displayEquation = document.querySelector('.display-equation');
+
+// there is a bug with decimals and negatives with operands
