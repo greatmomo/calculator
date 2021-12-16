@@ -155,6 +155,8 @@ function inputValues(e) {
                 if (!valueRight.includes('.')) {
                     if (valueRight === '') {
                         valueRight = '0.';
+                    } else if (valueRight === '-') {
+                        valueRight = '-0.';
                     } else {
                         valueRight += e.target.textContent;
                     }
@@ -218,5 +220,3 @@ const buttons = document.querySelectorAll('.button');
 buttons.forEach(elem => elem.addEventListener('click', inputValues));
 
 const displayEquation = document.querySelector('.display-equation');
-
-// there is a bug with decimals and negatives with operands
