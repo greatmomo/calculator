@@ -55,7 +55,6 @@ function inputValues(e) {
             } else {
                 valueRight += e.target.textContent;
             }
-            //console.log(`left: ${valueLeft}\tright: ${valueRight}`);
             break;
 
         case 'operation':
@@ -70,17 +69,14 @@ function inputValues(e) {
                 if (valueRight === '') {
                     return;
                 }
-                // equal code basically
                 valueLeft = operate(operation, +valueLeft, +valueRight);
                 if (typeof(valueLeft) === 'number') {
                     valueLeft = Math.round((valueLeft + Number.EPSILON) * 10000) / 10000;
                     valueLeft = valueLeft.toString();
                 }
                 valueRight = '';
-                // then the operation code
             }
             operation = e.target.textContent;
-            //console.log(`operation: ${operation}`);
             break;
 
         case 'equal':
@@ -168,9 +164,6 @@ function inputValues(e) {
             console.log('Invalid key Class. Contact your service provider.');
             break;
     }
-
-    // should be able to read out second class to check for number/operation and special cases
-    //console.log(`text: ${e.target.textContent}  \t key Class: ${e.target.classList[1]}`);
 
     if (keyClass === 'clear' || (keyClass === 'delete' && valueLeft === '')) {
         displayEquation.textContent = `0`;
